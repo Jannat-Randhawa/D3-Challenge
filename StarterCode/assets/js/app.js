@@ -276,12 +276,44 @@ d3.csv("../data/data.csv").then(function(censusData){
     // Household Income 
     var income = labelsGroup.append("text")
     .attr("x", 0)
-    .attr("y", 20)
+    .attr("y", 60)
     .attr("value", "income")
     .classed("active", true)
     .text("Income (Median)"); 
+
+  // Set Y-axis labels 
+  // Create a group for yaxis labels 
+    var labelsGroupYAxis = chartGroup.append("g")
+      .attr("transform", `translate(${0 - margin.left}, ${0 - (height / 2)})`);
     
-  
+    //HealthCare 
+    var healthCare = labelsGroupYAxis.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0 - margin.left)
+      .attr("x", 0 - 20)
+      .attr("dy", "1em")
+      .classed("axis-text", true)
+      .text("Lacks HealthCare");
+
+    //Obesity
+    var obesity = labelsGroupYAxis.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0 - margin.left)
+      .attr("x", 0 - 40)
+      .attr("dy", "1em")
+      .classed("axis-text", true)
+      .text("Obesity (%)");
+
+    //Smokes 
+    var smokes = labelsGroupYAxis.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0 - margin.left)
+      .attr("x", 0 - 20)
+      .attr("dy", "1em")
+      .classed("axis-text", true)
+      .text("Lacks HealthCare");
+
+
   
 
 })
