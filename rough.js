@@ -31,11 +31,11 @@ var chosenXAxis = "Poverty";
 var chosenYAxis = "Healthcare";
 
 // function used for updating x-scale var upon click on the x-axis label 
-function xScale(censusData, chosenXAxis) {
+function xScale(acsData, chosenXAxis) {
   // create scales
   var xLinearScale = d3.scaleLinear()
-    .domain([d3.min(censusData, d => d[chosenXAxis]) * 0.8,
-      d3.max(censusData, d => d[chosenXAxis]) * 1.2
+    .domain([d3.min(acsData, d => d[chosenXAxis]) * 0.8,
+      d3.max(acsData, d => d[chosenXAxis]) * 1.2
     ])
     .range([0, width]);
 
