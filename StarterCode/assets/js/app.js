@@ -27,8 +27,8 @@ var chartGroup = svg.append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`); 
 
 // Set Initial Params 
-var chosenXAxis = "Poverty";
-var chosenYAxis = "Healthcare";
+var chosenXAxis = "poverty";
+var chosenYAxis = "healthcare";
 
 // function used for updating x-scale var upon click on the x-axis label 
 function xScale(acsData, chosenXAxis) {
@@ -119,7 +119,7 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
     .attr("class", 'd3-tip')
     .offset([-8, 0])
     .html(function(d) {
-      return (`${d.state}<br> ${xlabel} ${d[chosenXAxis], chosenXAxis}<br>${ylabel} ${d[chosenYAxis], chosenYAxis}`);
+      return (`${d.state}<br> ${xlabel} ${d[chosenXAxis]}<br>${ylabel} ${d[chosenYAxis]}`);
     });
 
   circlesGroup.call(toolTip);
@@ -174,11 +174,22 @@ d3.csv("./assets/data/data.csv").then(function(censusData){
     .data(censusData)
     .enter()
     .append("circle")
+    .attr("class", "stateCircle")
     .attr("cx", d => xLinearScale(d[chosenXAxis]))
     .attr("cy", d => yLinearScale(d[chosenYAxis]))
     .attr("r", 20)
     .attr("fill", "darkblue")
     .attr("opacity", ".5");
+
+  var textGroup = chartGroup.selectAll(".stateText")
+    .data(censusData)
+    .enter()
+    .append("text")
+    .attr("class", "stateText")
+    .text(d => d.abbr)
+    .attr("dx", d => xLinearScale(d[chosenXAxis]))
+    .attr("dy", d => yLinearScale(d[chosenYAxis]))
+
 
 // Create group for two x-axis labels
   var labelsGroup = chartGroup.append("g")
@@ -190,7 +201,7 @@ d3.csv("./assets/data/data.csv").then(function(censusData){
     .attr("x", 0)
     .attr("y", 20)
     .attr("value", "poverty")
-    .classed("active", true)
+    .attr("class", "aText active") 
     .text("Poverty (%)"); 
 
     // Age
@@ -198,7 +209,7 @@ d3.csv("./assets/data/data.csv").then(function(censusData){
     .attr("x", 0)
     .attr("y", 40)
     .attr("value", "age")
-    .classed("inactive", true)
+    .attr("class", "aText inactive") 
     .text("Age (Median)"); 
 
     // Household Income 
@@ -206,46 +217,49 @@ d3.csv("./assets/data/data.csv").then(function(censusData){
     .attr("x", 0)
     .attr("y", 60)
     .attr("value", "income")
-    .classed("active", true)
+    .attr("class", "aText inactive") 
     .text("Income (Median)"); 
 
   // Set Y-axis labels 
   // Create a group for yaxis labels 
     var labelsGroupYAxis = chartGroup.append("g")
-      .attr("transform", `translate(${0 - margin.left}, ${0 - (height / 2)})`);
+      .attr("transform", `translate("rotate (-90)")`);
     
     //HealthCare 
     var healthCare = labelsGroupYAxis.append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", 0 - margin.left)
-      .attr("x", 0 - 20)
+      .attr("y", -60)
+      .attr("x", 0 - (height / 2))
       .attr("dy", "1em")
-      .classed("axis-text", true)
+      .attr("class", "aText active")
+      .attr("value", "healthcare") 
       .text("Lacks HealthCare");
 
     //Obesity
     var obesity = labelsGroupYAxis.append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", 0 - margin.left)
-      .attr("x", 0 - 40)
+      .attr("y", 0 - 80)
+      .attr("x", 0 - (height / 2))
       .attr("dy", "1em")
-      .classed("axis-text", true)
+      .attr("class", "aText inactive") 
+      .attr("value", "obesity") 
       .text("Obesity (%)");
 
     //Smokes 
     var smokes = labelsGroupYAxis.append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", 0 - margin.left)
-      .attr("x", 0 - 60)
+      .attr("y", 0 - 100)
+      .attr("x", 0 - (height / 2))
       .attr("dy", "1em")
-      .classed("axis-text", true)
+      .attr("class", "aText inactive")
+      .attr("value", "smokes") 
       .text("Smokes(%");
 
     // updateToolTip function above csv import
     var circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
     
     // x axis labels event listener
-    labelsGroup.selectAll("text")
+    labelsGroup.selectAll(".aText")
       .on("click", function() {
       // get value of selection
         var value = d3.select(this).attr("value");
@@ -306,7 +320,7 @@ d3.csv("./assets/data/data.csv").then(function(censusData){
       }
     });
     
-    labelsGroupYAxis.selectAll("text")
+    labelsGroupYAxis.selectAll(".aText")
       .on("click", function() {
     // get value of selection
       var value = d3.select(this).attr("value");
