@@ -426,17 +426,19 @@ d3.csv("../data/data.csv").then(function(censusData){
           .classed("inactive", true);
       }
       else {
-        income
+        smokes
           .classed("active", true)
           .classed("inactive", false);
-        poverty
+        healthCare
           .classed("active", false)
           .classed("inactive", true);
-        age
+        obesity
           .classed("active", false)
           .classed("inactive", true);
         }
     }
+    }).catch(function(error) {
+      console.log(error);
     });
     
 
