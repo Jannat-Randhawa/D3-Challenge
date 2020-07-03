@@ -24,4 +24,7 @@ var svg = d3.select("#scatter")
 // Append an SVG group 
 var charGroup = svg.append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`); 
+
+// Set Initial Params 
+var chosenXAxis = "Poverty"
     
