@@ -308,10 +308,137 @@ d3.csv("../data/data.csv").then(function(censusData){
     var smokes = labelsGroupYAxis.append("text")
       .attr("transform", "rotate(-90)")
       .attr("y", 0 - margin.left)
-      .attr("x", 0 - 20)
+      .attr("x", 0 - 60)
       .attr("dy", "1em")
       .classed("axis-text", true)
-      .text("Lacks HealthCare");
+      .text("Smokes(%");
+
+    // updateToolTip function above csv import
+    var circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
+    
+    // x axis labels event listener
+    labelsGroupYAxis.selectAll("text")
+      .on("click", function() {
+      // get value of selection
+        var value = d3.select(this).attr("value");
+        if (value !== chosenYAxis) {
+
+        // replaces chosenXAxis with value
+        chosenYAxis = value;
+
+        // console.log(chosenXAxis)
+
+        // functions here found above csv import
+        // updates x scale for new data
+        yLinearScale = yScale(censusData, chosenYAxis);
+
+        // updates x axis with transition
+        yAxis = renderAxes(YLinearScale, yAxis);
+
+        // updates circles with new x values
+        circlesGroup = renderCircles(circlesGroup, xLinearScale, yLinearScale, chosenYaxis, chosenXAxis);
+
+        // updates tooltips with new info
+        circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
+
+        // changes classes to change bold text
+        if (chosenXAxis === "poverty") {
+          poverty
+            .classed("active", true)
+            .classed("inactive", false);
+          age
+            .classed("active", false)
+            .classed("inactive", true);
+          income
+            .classed("active", false)
+            .classed("inactive", true);
+        }
+        else if (chosenXAxis === "age"){
+          age
+            .classed("active", true)
+            .classed("inactive", false);
+          poverty
+            .classed("active", false)
+            .classed("inactive", true);
+          income
+            .classed("active", false)
+            .classed("inactive", true);
+        }
+        else {
+          income
+            .classed("active", true)
+            .classed("inactive", false);
+          poverty
+            .classed("active", false)
+            .classed("inactive", true);
+          age
+            .classed("active", false)
+            .classed("inactive", true);
+          }
+      }
+
+      // x axis labels event listener
+    labelsGroup.selectAll("text")
+    .on("click", function() {
+    // get value of selection
+      var value = d3.select(this).attr("value");
+      if (value !== chosenXAxis) {
+
+      // replaces chosenXAxis with value
+      chosenXAxis = value;
+
+      // console.log(chosenXAxis)
+
+      // functions here found above csv import
+      // updates x scale for new data
+      xLinearScale = xScale(censusData, chosenXAxis);
+
+      // updates x axis with transition
+      xAxis = renderAxes(xLinearScale, xAxis);
+
+      // updates circles with new x values
+      circlesGroup = renderCircles(circlesGroup, xLinearScale, yLinearScale, chosenYaxis, chosenXAxis);
+
+      // updates tooltips with new info
+      circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
+
+      // changes classes to change bold text
+      if (chosenYAxis === "healthCare") {
+        healthCare
+          .classed("active", true)
+          .classed("inactive", false);
+        obesity
+          .classed("active", false)
+          .classed("inactive", true);
+        smokes
+          .classed("active", false)
+          .classed("inactive", true);
+      }
+      else if (chosenYAxis === "obesity"){
+        obesity
+          .classed("active", true)
+          .classed("inactive", false);
+        healthCare
+          .classed("active", false)
+          .classed("inactive", true);
+        smokes
+          .classed("active", false)
+          .classed("inactive", true);
+      }
+      else {
+        income
+          .classed("active", true)
+          .classed("inactive", false);
+        poverty
+          .classed("active", false)
+          .classed("inactive", true);
+        age
+          .classed("active", false)
+          .classed("inactive", true);
+        }
+    }
+    });
+    
 
 
   
