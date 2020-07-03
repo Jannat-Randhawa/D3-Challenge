@@ -191,7 +191,7 @@ function updateToolTip(chosenXAxis, circlesGroup) {
     .attr("class", "tooltip")
     .offset([80, -60])
     .html(function(d) {
-      return (`${d.state}<br>${d[chosenXAxis], chosenXAxis}<br>${d[chosenYAxis], chosenYAxis}`);
+      return (`${d.state}<br> ${xlabel} ${d[chosenXAxis], chosenXAxis}<br>${ylabel} ${d[chosenYAxis], chosenYAxis}`);
     });
 
   circlesGroup.call(toolTip);
@@ -252,5 +252,36 @@ d3.csv("../data/data.csv").then(function(censusData){
     .attr("fill", "darkblue")
     .attr("opacity", ".5");
 
+// Create group for two x-axis labels
+  var labelsGroup = chartGroup.append("g")
+    .attr("transform", `translate(${width / 2}, ${height + 20})`)
+
+// Create labels for the x group variables. 
+  // Poverty
+  var poverty = labelsGroup.append("text")
+    .attr("x", 0)
+    .attr("y", 20)
+    .attr("value", "poverty")
+    .classed("active", true)
+    .text("Poverty (%)"); 
+
+    // Age
+    var  age = labelsGroup.append("text")
+    .attr("x", 0)
+    .attr("y", 40)
+    .attr("value", "age")
+    .classed("inactive", true)
+    .text("Age (Median)"); 
+
+    // Household Income 
+    var income = labelsGroup.append("text")
+    .attr("x", 0)
+    .attr("y", 20)
+    .attr("value", "income")
+    .classed("active", true)
+    .text("Income (Median)"); 
+    
   
+  
+
 })
