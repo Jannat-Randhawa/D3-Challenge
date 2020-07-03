@@ -206,3 +206,51 @@ function updateToolTip(chosenXAxis, circlesGroup) {
 
   return circlesGroup;
 }
+
+d3.csv("../data/data.csv").then(function(censusData){
+  console.log(censusData);
+
+  censusData.forEach(function(data){
+    //Parse the data 
+    // yAxis Values
+    data.healthcare = +data.healthcare;
+    data.obesity = +data.obesity;
+    data.income = +data.income;
+    data.poverty = +data.poverty;
+    data.age = +data.age;
+    data.income = +data.income;
+
+  });
+
+  // set the xLinearScale for the data above. 
+  var xLinearScale = xScale(censusData, chosenXAxis); 
+
+  // set the yLinearScale for the data above. 
+  var yLinearScale = yScale(censusData, chosenYAxis); 
+
+  // Initial xAxis functions 
+  var bottomAxis = d3.axisBottom(xLinearScale);
+  var leftAxis = d3.axisLeft(yLinearScale); 
+
+  // append the x axis 
+  var xAxis = charGroup.append("g")
+    .classed("x-axis", true)
+    .attr("transform", `translate(0, ${height})`)
+    .call(bottomAxis)
+
+  // append the y axis 
+  charGroup.append("g")
+    .call(leftAxis)
+
+  var circlesGroup = chartGroup.selectAll("circle")
+    .data(censusData)
+    .enter()
+    .append("circle")
+    .attr("cx", d => xLinearScale(d[chosenXAxis]))
+    .attr("cy", d => yLinearScale(d[chosenYAxis]))
+    .attr("r", 20)
+    .attr("fill", "darkblue")
+    .attr("opacity", ".5");
+
+  
+})
