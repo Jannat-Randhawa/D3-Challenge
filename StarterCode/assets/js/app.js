@@ -187,8 +187,9 @@ d3.csv("./assets/data/data.csv").then(function(acsData){
     .append("text")
     .attr("class", "stateText")
     .text(d => d.abbr)
-    .attr("dx", d => xLinearScale(d[chosenXAxis]))
-    .attr("dy", d => yLinearScale(d[chosenYAxis]))
+    .attr("x", d => xLinearScale(d[chosenXAxis]))
+    .attr("y", d => yLinearScale(d[chosenYAxis]))
+    .attr("dy", 3);
 
 
 // Create group for two x-axis labels
@@ -278,7 +279,7 @@ d3.csv("./assets/data/data.csv").then(function(acsData){
         xAxis = renderXAxes(xLinearScale, xAxis);
 
         // updates circles with new x values
-        circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis, newXScale, newYScale);
+        circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis, newYScale, newXScale);
 
         // updates tooltips with new info
         circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
@@ -339,7 +340,7 @@ d3.csv("./assets/data/data.csv").then(function(acsData){
       yAxis = renderYAxes(yLinearScale, yAxis);
 
       // updates circles with new values
-      circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis, newXScale, newYScale);
+      circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis, newYScale, newXScale);
 
       // updates tooltips with new info
       circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
