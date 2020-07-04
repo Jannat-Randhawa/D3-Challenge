@@ -186,9 +186,7 @@ d3.csv("./assets/data/data.csv").then(function(acsData){
     .attr("class", "stateCircle")
     .attr("cx", d => xLinearScale(d[chosenXAxis]))
     .attr("cy", d => yLinearScale(d[chosenYAxis]))
-    .attr("r", 20)
-    .attr("fill", "darkblue")
-    .attr("opacity", ".5");
+    .attr("r", 20);
 
   var textGroup = chartGroup.selectAll(".stateText")
     .data(acsData)
