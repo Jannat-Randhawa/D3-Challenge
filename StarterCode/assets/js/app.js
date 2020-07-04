@@ -275,10 +275,10 @@ d3.csv("./assets/data/data.csv").then(function(censusData){
         xLinearScale = xScale(censusData, chosenXAxis);
 
         // updates x axis with transition
-        xAxis = renderAxes(xLinearScale, xAxis);
+        xAxis = renderXAxes(xLinearScale, xAxis);
 
         // updates circles with new x values
-        circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
+        circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis, newXScale, newYScale);
 
         // updates tooltips with new info
         circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
@@ -333,13 +333,13 @@ d3.csv("./assets/data/data.csv").then(function(censusData){
 
       // functions here found above csv import
       // updates Y scale for new data
-      yLinearScale = YScale(censusData, chosenYAxis);
+      yLinearScale = yScale(censusData, chosenYAxis);
 
       // updates y axis with transition
-      yAxis = renderAxes(yLinearScale, yAxis);
+      yAxis = renderYAxes(yLinearScale, yAxis);
 
       // updates circles with new values
-      circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
+      circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis, newXScale, newYScale);
 
       // updates tooltips with new info
       circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
