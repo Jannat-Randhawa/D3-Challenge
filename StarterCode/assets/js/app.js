@@ -42,11 +42,11 @@ function xScale(acsData, chosenXAxis) {
   return xLinearScale;
 }
 // function used for updating y-scale var upon click on the y-axis label 
-function yScale(censusData, chosenYAxis) {
+function yScale(acsData, chosenYAxis) {
   // create scales
   var yLinearScale = d3.scaleLinear()
-    .domain([d3.min(censusData, d => d[chosenYAxis]) * 0.8,
-      d3.max(censusData, d => d[chosenYAxis]) * 1.2
+    .domain([d3.min(acsData, d => d[chosenYAxis]) * 0.8,
+      d3.max(acsData, d => d[chosenYAxis]) * 1.2
     ])
     .range([height, 0]);
 
@@ -69,7 +69,7 @@ function renderXAxes(newXScale, xAxis) {
 function renderYAxes(newYScale, yAxis) {
   var leftAxis = d3.axisLeft(newYScale);
 
-  xAxis.transition()
+  yAxis.transition()
     .duration(1000)
     .call(leftAxis);
 
@@ -135,26 +135,26 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
   return circlesGroup;
 }
 
-d3.csv("./assets/data/data.csv").then(function(censusData){
-  console.log(censusData);
+d3.csv("./assets/data/data.csv").then(function(acsData){
+  console.log(acsData);
 
-  censusData.forEach(function(data){
+    acsData.forEach(function(data){
     //Parse the data 
     // yAxis Values
-    data.healthcare = +data.healthcare;
-    data.obesity = +data.obesity;
-    data.income = +data.income;
-    data.poverty = +data.poverty;
-    data.age = +data.age;
-    data.income = +data.income;
+      data.healthcare = +data.healthcare;
+      data.obesity = +data.obesity;
+      data.income = +data.income;
+      data.poverty = +data.poverty;
+      data.age = +data.age;
+      data.income = +data.income;
 
   });
 
   // set the xLinearScale for the data above. 
-  var xLinearScale = xScale(censusData, chosenXAxis); 
+  var xLinearScale = xScale(acsData, chosenXAxis); 
 
   // set the yLinearScale for the data above. 
-  var yLinearScale = yScale(censusData, chosenYAxis); 
+  var yLinearScale = yScale(acsData, chosenYAxis); 
 
   // Initial xAxis functions 
   var bottomAxis = d3.axisBottom(xLinearScale);
@@ -167,11 +167,11 @@ d3.csv("./assets/data/data.csv").then(function(censusData){
     .call(bottomAxis)
 
   // append the y axis 
-  chartGroup.append("g")
+  var yAxis = chartGroup.append("g")
     .call(leftAxis)
 
   var circlesGroup = chartGroup.selectAll("circle")
-    .data(censusData)
+    .data(acsData)
     .enter()
     .append("circle")
     .attr("class", "stateCircle")
@@ -182,7 +182,7 @@ d3.csv("./assets/data/data.csv").then(function(censusData){
     .attr("opacity", ".5");
 
   var textGroup = chartGroup.selectAll(".stateText")
-    .data(censusData)
+    .data(acsData)
     .enter()
     .append("text")
     .attr("class", "stateText")
@@ -272,7 +272,7 @@ d3.csv("./assets/data/data.csv").then(function(censusData){
 
         // functions here found above csv import
         // updates x scale for new data
-        xLinearScale = xScale(censusData, chosenXAxis);
+        xLinearScale = xScale(acsData, chosenXAxis);
 
         // updates x axis with transition
         xAxis = renderXAxes(xLinearScale, xAxis);
@@ -324,7 +324,7 @@ d3.csv("./assets/data/data.csv").then(function(censusData){
       .on("click", function() {
     // get value of selection
       var value = d3.select(this).attr("value");
-      if (value !== chosenXAxis) {
+      if (value !== chosenYAxis) {
 
       // replaces chosenXAxis with value
       chosenYAxis = value;
@@ -333,7 +333,7 @@ d3.csv("./assets/data/data.csv").then(function(censusData){
 
       // functions here found above csv import
       // updates Y scale for new data
-      yLinearScale = yScale(censusData, chosenYAxis);
+      yLinearScale = yScale(acsData, chosenYAxis);
 
       // updates y axis with transition
       yAxis = renderYAxes(yLinearScale, yAxis);
