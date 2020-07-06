@@ -155,7 +155,7 @@ d3.csv("./assets/data/data.csv").then(function(acsData){
       data.income = +data.income;
       data.poverty = +data.poverty;
       data.age = +data.age;
-      data.income = +data.income;
+      data.smokes = +data.smokes;
 
   });
 
