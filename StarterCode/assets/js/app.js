@@ -277,7 +277,7 @@ d3.csv("./assets/data/data.csv").then(function(acsData){
         // replaces chosenXAxis with value
         chosenXAxis = value;
 
-        console.log(chosenXAxis)
+        // console.log(chosenXAxis)
 
         // functions here found above csv import
         // updates x scale for new data
@@ -289,27 +289,17 @@ d3.csv("./assets/data/data.csv").then(function(acsData){
         // updates circles with new x values
         // circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
         d3.selectAll("circle").each(function(){
-          console.log(xLinearScale)
+          // console.log(xLinearScale)
           d3.select(this)
               .transition()
               .attr("cx", d => {
-                console.log(d[chosenXAxis])
-                console.log(xScale(acsData, chosenXAxis)(d[chosenXAxis]));
-                // return xLinearScale(d[chosenXAxis])
+                // console.log(d[chosenXAxis])
+                // console.log(xScale(acsData, chosenXAxis)(d[chosenXAxis]));
+                // return LinearScale(d[chosenXAxis])
                 return xScale(acsData, chosenXAxis)(d[chosenXAxis]);
               })
               .duration(2000)  
         });
-        // var circlesGroup = chartGroup.selectAll("circle")
-        //   .data(acsData)
-        //   .enter()
-        //   .append("circle")
-        //   .attr("class", "stateCircle")
-        //   .attr("cx", d => xLinearScale(d[chosenXAxis]))
-        //   .attr("cy", d => yLinearScale(d[chosenYAxis]))
-        //   .attr("r", 20);
-        // // updates tooltips with new info
-        // circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
 
 
         textGroup = renderText(textGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
@@ -371,12 +361,12 @@ d3.csv("./assets/data/data.csv").then(function(acsData){
 
       // updates circles with new values
       d3.selectAll("circle").each(function(){
-        console.log(yLinearScale)
+        // console.log(yLinearScale)
         d3.select(this)
             .transition()
             .attr("cy", d => {
-              console.log(d[chosenYAxis])
-              console.log(yScale(acsData, chosenYAxis)(d[chosenYAxis]));
+              // console.log(d[chosenYAxis])
+              // console.log(yScale(acsData, chosenYAxis)(d[chosenYAxis]));
               // return xLinearScale(d[chosenXAxis])
               return yScale(acsData, chosenYAxis)(d[chosenYAxis]);
             })
@@ -412,15 +402,15 @@ d3.csv("./assets/data/data.csv").then(function(acsData){
             .classed("inactive", true);
       }
         else {
-          smokesLabel
-            .classed("active", true)
-            .classed("inactive", false);
-          healthcareLabel
-            .classed("active", false)
-            .classed("inactive", true);
           obesityLabel
             .classed("active", false)
             .classed("inactive", true);
+          healthcareLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          smokesLabel
+            .classed("active", true)
+            .classed("inactive", false);
       }
     }
   });
